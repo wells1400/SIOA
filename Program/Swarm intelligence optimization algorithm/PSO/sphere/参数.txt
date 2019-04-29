@@ -1,0 +1,4 @@
+GB最优解：array([-0.00178188,  0.00912679])
+参考解：array([0,  0])
+运行参数：x_interval=[-3, 3], partical_size=1000,partical_dimen=2, num_iter_round=50, inertial_weight=0.8,c1=2, c2=2, partical_max_vel=0.5
+
