@@ -36,18 +36,45 @@ class CoordinateProcess:
 
 
 class AntColony:
-    def __init__(self,coordinate_matrix, distance_matrix, ant_size=50, info_alpha=1, heu_beta=5, phe_decay=0.1, phe_amount=1, max_iter=100):
-        self.coordinate_matrix = coordinate_matrix  # 坐标矩阵
-        self.distance_matrix = distance_matrix  # 距离矩阵
+    def __init__(self, num_cities=10, min_coord=1, max_coord=20, ant_size=8, info_alpha=1,
+                 heu_beta=5, phe_decay=0.1, phe_amount=1, max_iter=100):
+        self.coordinate_generator = CoordinateProcess(num_cities, min_coord, max_coord)  # 坐标产生器
+
+        self.coordinate_matrix = self.coordinate_generator.coordinate  # 坐标矩阵
+        self.distance_matrix = self.coordinate_generator.distance_matrix  # 距离矩阵
+        self.max_iter = max_iter  # 最大迭代次数
 
         self.ant_size = ant_size  # 蚁群大小
         self.info_alpha = info_alpha  # 信息素重要度因子
-        self.heu_beta = heu_beta  # 启发函数重要度因子
+        self.phe_beta = heu_beta  # 启发函数重要度因子
         self.phe_decay = phe_decay  # 信息素衰减系数
         self.phe_amount = phe_amount  # 蚂蚁信息素散布量
 
-        self.max_iter = max_iter  # 最大迭代次数
+        self.city_index = np.array([i for i in range(num_cities)])  # 城市索引
+        self.phe_matrix = np.ones(self.distance_matrix.shape)  # 道路残留信息素矩阵,初始化为1
 
+        self.ant_pos = np.array([np.random.randint(0, num_cities) for _ in range(self.ant_size)])  # 蚂蚁初始位置
+        self.ant_path_collector = np.array([[self.ant_pos[ant_index]] for ant_index in range(self.ant_size)])  # 蚂蚁路径记录器
+        self.city_allow = np.array([[city_index for city_index in range(num_cities)
+                                     if city_index != self.ant_pos[i]] for i in range(self.ant_size)])  # 城市禁忌表
+        self.ant_visitprob = np.zeros(self.city_allow.shape)  # 存储所有蚂蚁访问各城市的概率，初始化为0
+        self.best_path = np.array([])  # 最优路径
+        self.best_path_length = sys.maxsize  # 最优路径的长度
+
+    def ant_phe_distribute(self):
+        pass
+
+    def refresh_road_phe(self):
+        pass
+
+    def refresh_ant_visitprob(self):
+        pass
+
+    def ant_visit(self):
+        pass
+
+    def stop_control(self, iter_round):
+        return iter_round >= self.max_iter
 
 
 
@@ -56,6 +83,7 @@ if __name__ == '__main__':
     coordinate_matrix = coordinateprocessor.coordinate
     distance_matrix = coordinateprocessor.distance_matrix
     antcolony = AntColony(coordinate_matrix, distance_matrix)
+    print(np.ones((2,3)))
 
 
 
