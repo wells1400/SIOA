@@ -66,8 +66,7 @@ class AntColony:
         self.best_len_record = []
 
     def ant_init(self):  # 初始化蚁群各蚂蚁的位置、路径记录器、初始禁忌表、城市访问概率表
-        self.ant_pos = np.array(
-            [self.city_index[np.random.randint(0, self.num_cities)] for _ in range(self.ant_size)])  # 蚂蚁所在位置
+        self.ant_pos = np.array([self.city_index[np.random.randint(0, self.num_cities)] for _ in range(self.ant_size)])  # 蚂蚁所在位置
         self.ant_path_collector = [[self.ant_pos[ant_index]] for ant_index in range(self.ant_size)]  # 蚂蚁路径记录器
         self.ant_path_length_collector = np.array([])  # 蚂蚁路径长度记录表
 
@@ -209,7 +208,6 @@ class AntColony:
                 # 更新道路上的信息素（如果是acs 模型）
                 if self.ant_model == 'acs':
                     self.update_road_phe(self.ant_model)
-
                 self.mean_len_record.append(self.ant_path_length_collector.mean())
                 self.best_len_record.append(self.best_path_length)
                 iter_round += 1
