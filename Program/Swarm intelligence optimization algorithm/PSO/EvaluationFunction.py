@@ -135,7 +135,8 @@ class PlotEvaluation3D:
         '''
         :return: GMM=0 at (0,0...0)
         '''
-        self.Z = -20 * np.exp(-0.2 * np.sqrt(0.5 * (self.X**2 + self.Y**2))) -                 np.exp(0.5 * (np.cos(2 * np.pi * self.X) + np.cos(2 * np.pi * self.Y))) + np.e + 20
+        self.Z = -20 * np.exp(-0.2 * np.sqrt(0.5 * (self.X**2 + self.Y**2))) - \
+                 np.exp(0.5 * (np.cos(2 * np.pi * self.X) + np.cos(2 * np.pi * self.Y))) + np.e + 20
         #self.Z = - self.Z
         self.drawfunc3D(title='Ackley function', z_min=None, z_max=0)
         
