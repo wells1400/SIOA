@@ -218,12 +218,3 @@ class AntColony:
         return self.ant_best()
 
 
-if __name__ == '__main__':
-    coordinateprocessor = CoordinateProcess(10, 1, 10)
-    coordinate_matrix = coordinateprocessor.coordinate
-    distance_matrix = coordinateprocessor.distance_matrix
-    antcolony = AntColony(coordinate_matrix, distance_matrix)
-    print(np.ones((2,3)))
-
-
-
