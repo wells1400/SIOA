@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 
 class AntColony:
     def __init__(self, num_cities=10, min_coord=1, max_coord=20, ant_size=8, info_alpha=1,
-                 heu_beta=5, phe_decay=0.1, phe_amount=1, max_iter=100, ant_model='acs'):
+                 heu_beta=5, phe_decay=0.1, phe_amount=1, max_iter=100, ant_model='acs',iter_report=1):
         self.coordinate_generator = CoordinateProcess(num_cities, min_coord, max_coord)  # 城市坐标产生器
         self.num_cities = num_cities
         self.city_index = np.array([i for i in range(self.num_cities)])  # 城市索引
@@ -35,6 +35,8 @@ class AntColony:
         self.mean_len_record = []
         self.best_len_record = []
         self.coordinate_generator.plot_cities()
+
+        self.iter_report = iter_report
 
     def ant_init(self):
         '''
@@ -197,7 +199,7 @@ class AntColony:
                 self.best_len_record.append(self.best_path_length)
 
                 iter_round += 1
-                if iter_round % 10 == 0:
+                if iter_round % self.iter_report == 0:
                     print(iter_round)
             else:
                 break
@@ -205,8 +207,8 @@ class AntColony:
 
 
 if __name__ == '__main__':
-    ant_test = AntColony(num_cities=15, min_coord=1, max_coord=100, ant_size=50, info_alpha=1,
-                         heu_beta=2, phe_decay=0.1, phe_amount=10, max_iter=100, ant_model='aqs')
+    ant_test = AntColony(num_cities=25, min_coord=1, max_coord=100, ant_size=50, info_alpha=1,
+                         heu_beta=2, phe_decay=0.1, phe_amount=10, max_iter=100, ant_model='aqs', iter_report=1)
     ant_test.engine()
 
 
