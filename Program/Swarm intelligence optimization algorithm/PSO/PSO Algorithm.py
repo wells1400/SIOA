@@ -9,8 +9,7 @@ class ParticalSwarmOptimization:
     def __init__(self, fitness_func=None, x_interval=[-3, 3], partical_size=100,
                  partical_dimen=2, num_iter_round=100, inertial_weight=0.9,
                  c1=2, c2=2, partical_max_vel=0.5):
-        self.val_func_pool = BaseEvaluationFunction()  # 未指定适应度函数的话，默认测试函数库
-        self.val_func = self.val_func_pool.sphere if fitness_func is None else fitness_func  # 默认sphere适应度函数
+        self.val_func = fitness_func  # 适应度函数
         self.visual_plot = PlotEvaluation3D(xinterval_min=x_interval[0],
                                             xinterval_max=x_interval[1])  # 默认sphere适应度函数可视化
         self.param_min = x_interval[0]  # 解范围
@@ -58,11 +57,15 @@ class ParticalSwarmOptimization:
         self.partical_gb_fitness = self.partical_pb_fitness[0]
         self.partical_gb_pos = self.partical_pb_pos[0]
 
+    # sigmoid适应度函数
+    def sigmoid(self, val):
+        return 1/(1 + np.exp(-val))
+
     def calcult_fitness(self):
         '''
-        :return: 计算粒子的适应度
+        :return: 计算粒子的适应度,适应度大小就是函数的值
         '''
-        self.partical_fitness = np.array([1 / self.val_func(partical_pos) for partical_pos in self.partical_pos])
+        self.partical_fitness = np.array([self.sigmoid(self.val_func(partical_pos) )for partical_pos in self.partical_pos])
 
     def search_pbgb(self):
         '''
@@ -156,8 +159,11 @@ class ParticalSwarmOptimization:
 
 
 if __name__ == '__main__':
-    pso_test = ParticalSwarmOptimization(x_interval=[-3, 3], partical_size=1000, partical_dimen=2,
-                                         num_iter_round=50, inertial_weight=0.8, c1=2, c2=2,
-                                         partical_max_vel=0.5)
-    pso_test.plot_sample()
+    target_func = lambda x: -(x + 2) * (x + 1) * (x - 3) * (x - 4)
+    pso_test = ParticalSwarmOptimization(fitness_func=target_func, x_interval=[0, 10], partical_size=1000, partical_dimen=1,
+                                         num_iter_round=1000, inertial_weight=0.8, c1=2, c2=2,
+                                         partical_max_vel=1)
+    #pso_test.plot_sample()
     pso_test.pso_engine()
+    print(pso_test.partical_gb_pos)
+    print(pso_test.partical_gb_fitness)
