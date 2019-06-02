@@ -231,11 +231,12 @@ class Genetic:
 class ParticalSwarmOptimization:
 
     def __init__(self, target_func=None, x_interval=[-3, 3], particle_size=100,
-                 iter_round=100, inertial_weight=0.9,
+                 iter_round=100, inertial_weight=0.9,deciml_digits=6,
                  c1=2, c2=2, partical_max_vel=0.5):
         self.target_func = target_func  # 适应度函数
         self.x_min = x_interval[0]  # 解范围-最小值
         self.x_max = x_interval[1]  # 解范围-最大值
+        self.deciml_digits = deciml_digits  # 小数点位数
 
         self.particle_size = particle_size  # 粒子个数
         self.particle_max_vel = partical_max_vel  # 粒子最大速度
@@ -362,7 +363,7 @@ class ParticalSwarmOptimization:
                 continue
             break
         print('PSO Algorythmn:')
-        print('Best solution of variable x:', self.particle_gb_pos)
+        print('Best solution of variable x:', round(self.particle_gb_pos, self.deciml_digits))
         print('The fitness of best solution:', self.particle_gb_fitness)
         print('Best function val of x:', self.__evaluate_func_val(self.particle_gb_pos))
         return self.plot_iter(pic_save_dir)
@@ -382,6 +383,7 @@ class SimulateAnneal:
         self.research_step = math.pow(1, -deciml_digits)  # 产生新解时的搜索步长
         self.cooling_alpha = cooling_alpha  # 降温系数
         self.iter_round = iter_round  # 最大迭代次数
+        self.deciml_digits = deciml_digits
 
         self.solution_local = np.random.randint(self.x_interval[0], high=self.x_interval[1]) * \
                               np.random.rand() * self.research_step  # 随机初始化初始解
@@ -472,7 +474,7 @@ class SimulateAnneal:
             # 一次降温
             self.temperature_pos = self.temperature_pos * self.cooling_alpha
         print('Simulated Anneal:')
-        print('best solution of x:', self.best_solution)
+        print('best solution of x:', round(self.best_solution, self.deciml_digits))
         print('best function val of x:', self.best_solution_func_val)
         return self.plot_iter(pic_save_dir)
 
@@ -488,10 +490,10 @@ if __name__ == '__main__':
 
     # PSO
     pso_test = ParticalSwarmOptimization(target_func,x_interval=[0, 10], particle_size=500, iter_round=50,
-                                         inertial_weight=0.8, c1=2, c2=2, partical_max_vel=0.05)
+                                         deciml_digits=6, inertial_weight=0.8, c1=2, c2=2, partical_max_vel=0.05)
     pso_test.pso_engine(pic_save_dir)
 
     # 模拟退火
     test_simuanneal = SimulateAnneal(target_func, interval=[0, 10], min_temperature=25, max_temperature=100,
-                                     cooling_alpha=0.9, iter_round=500, deciml_digits=3, inner_loop_round=100)
+                                     cooling_alpha=0.9, iter_round=500, deciml_digits=6, inner_loop_round=100)
     test_simuanneal.simulate_anneal_tsp_engine(pic_save_dir)
