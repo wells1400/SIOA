@@ -30,14 +30,14 @@ class GraphGenerator:
                 line = line.replace('\n', '')
                 param_edge = line.split(',')
                 if len(param_edge) < 5:
-                    raise 'not enough param parsed at:' + line
+                    raise Exception('not enough param parsed at:' + line)
                 graph.add_edges_from([(param_edge[0], param_edge[1], {'weight': float(param_edge[-1])})])
                 if param_edge[0] in self.node_weight_dic and self.node_weight_dic[param_edge[0]] != float(
                         param_edge[2]):
-                    raise 'node weight wrong for node %s at: %s' % (param_edge[0], line)
+                    raise Exception('node weight wrong for node %s at: %s' % (param_edge[0], line))
                 if param_edge[1] in self.node_weight_dic and self.node_weight_dic[param_edge[1]] != float(
                         param_edge[3]):
-                    raise 'node weight wrong for node %s at: %s' % (param_edge[1], line)
+                    raise Exception('node weight wrong for node %s at: %s' % (param_edge[1], line))
                 if param_edge[0] not in self.node_weight_dic:
                     self.node_weight_dic[param_edge[0]] = float(param_edge[2])
                 if param_edge[1] not in self.node_weight_dic:
@@ -45,7 +45,7 @@ class GraphGenerator:
         return graph
 
     # 可视化有权图
-    def graph_plot(self,pic_save_path):
+    def graph_plot(self, pic_save_path):
         graph = self.graph
         edge_labels = dict([((u, v,), d['weight'])
                             for u, v, d in graph.edges(data=True)])
@@ -152,9 +152,9 @@ if __name__ == '__main__':
     data_file_path = r'E:\OtherProfit\Program\PersonalProfit\Djkstra\source data\graph_data.txt'
     pic_save_path = r'E:\OtherProfit\Program\PersonalProfit\Djkstra\PicSaveDir'
     # 图实例
-    graph_generator = GraphGenerator(with_arrow=False, data_file_path=data_file_path,pic_save_path=pic_save_path)
+    graph_generator = GraphGenerator(with_arrow=False, data_file_path=data_file_path, pic_save_path=pic_save_path)
     # 算法类，其中传入的参数load_threshold是那个参数a
-    advanced_djkstra = AdvancedDjkstra(graph_generator, load_threshold=5)
+    advanced_djkstra = AdvancedDjkstra(graph_generator, load_threshold=float(input('请输入载荷阈值：')))
     # 运行算法主程，输出参数i的结果，以及各路径的集合
     advanced_djkstra.advanced_djkstra_engine()
 
