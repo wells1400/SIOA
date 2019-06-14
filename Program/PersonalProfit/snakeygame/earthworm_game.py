@@ -1,5 +1,4 @@
 import pygame
-import sys
 import time
 
 from game_settings import Game_Settings
@@ -14,9 +13,7 @@ def run_game():
 	screen = pygame.display.set_mode((settings.screen_width, settings.screen_height))
 	earthworm = Earthworm(screen,settings)
 	pygame.display.set_caption("EARTHWORM")
-
 	while True:
-
 		gf.check_events(earthworm,settings)
 		earthworm.move()
 		gf.update_screen(screen, settings,earthworm)

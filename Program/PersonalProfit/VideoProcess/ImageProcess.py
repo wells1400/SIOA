@@ -171,9 +171,9 @@ class VideoProcess:
 
 if __name__ == '__main__':
     # video_path是视频的路径
-    video_path = r'H:\Other Program\Program\PersonalProfit\VideoProcess\SourceData\dark_moving.mp4'
+    video_path = r'E:\OtherProfit\Program\PersonalProfit\VideoProcess\SourceData\dark_moving.mp4'
     # image_save_dir截取的视频图像帧存放目录
-    image_save_dir = r'H:\Other Program\Program\PersonalProfit\VideoProcess\ImageSaveDir'
+    image_save_dir = r'E:\OtherProfit\Program\PersonalProfit\VideoProcess\ImageSaveDir'
     video_processor = VideoProcess(video_path=video_path,
                                    image_save_dir=image_save_dir,
                                    #  视频取帧间隔
