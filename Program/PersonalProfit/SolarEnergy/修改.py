@@ -41,7 +41,7 @@ def solar(lat, tilt, azimuth, albedo, A, B, C, lamda, n, month):
     cos_theta = np.sin(delta) * np.sin(phi) * np.cos(beta) - np.sin(delta) * np.cos(phi) * np.sin(beta) * np.cos(
         gamma) + np.cos(delta) * np.cos(phi) * np.cos(beta) * np.cos(omega) + np.cos(delta) * np.sin(phi) * np.sin(
         beta) * np.cos(gamma) * np.cos(omega) + np.cos(delta) * np.sin(beta) * np.sin(gamma) * np.sin(omega)
-
+    
     # Calculate zenith angle for every hour of the year
     cos_theta_z = np.cos(phi) * np.cos(delta) * np.cos(omega) + np.sin(phi) * np.sin(delta)
 
